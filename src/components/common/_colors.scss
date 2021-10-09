@@ -1,0 +1,21 @@
+$lightest: #FDFDFD;
+$light:    #F2F2F2;
+$gray:     rgb(171,171,171);
+$dark:     #111;
+$darkest:  #060606;
+
+$orange: rgb(255,105,33);
+$red:    #ff3d65;
+$blue:   rgb(18,102,203);
+
+$prime-back:   $lightest;
+$prime-text:   $dark;
+$prime-select: $light;
+$prime-accent: $blue;
+$prime-active: $orange;
+
+$second-back:   $light;
+$second-text:   $darkest;
+$second-select: $gray;
+$second-accent: $blue;
+$second-active: $orange;
