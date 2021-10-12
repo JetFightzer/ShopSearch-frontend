@@ -4,6 +4,7 @@
 		"build": "webpack"
 	},
 	"dependencies": {
+		"axios": "^0.22.0",
 		"localforage": "^1.7.3",
 		"lodash": "^4.17.15",
 		"mobx": "^5.13.0",
@@ -21,7 +22,9 @@
 		"@babel/preset-env": "^7.6.0",
 		"@babel/preset-react": "^7.0.0",
 		"@babel/preset-typescript": "^7.15.0",
+		"@fullhuman/postcss-purgecss": "^4.0.3",
 		"@teamsupercell/typings-for-css-modules-loader": "^2.5.1",
+		"@types/core-js": "^2.5.5",
 		"@types/react": "^17.0.21",
 		"@types/react-dom": "^17.0.9",
 		"@types/react-router-dom": "^5.1.9",
@@ -34,7 +37,6 @@
 		"postcss": "^8.3.9",
 		"postcss-loader": "^4",
 		"postcss-nested": "^5.0.6",
-		"purgecss-webpack-plugin": "^4.0.3",
 		"sass": "^1.41.1",
 		"sass-loader": "^10",
 		"style-loader": "^2.0.0",

@@ -1,3 +1,4 @@
+
 const path = require('path');
 
 const glob = require('glob')
@@ -5,10 +6,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const purgecssWebpackPlugin = require('purgecss-webpack-plugin');
+
+const env = 'development';
+process.env.NODE_ENV = env;
 
 module.exports = {
-	mode: 'development',
+	mode: env,
 	entry: {
 		'app': "./src/index.ts",
 		'service-worker': "./src/serviceWorker.js",
@@ -45,7 +48,20 @@ module.exports = {
 							},
 						}
 					},
-					'postcss-loader',
+					{
+						loader: 'postcss-loader',
+						options: {
+							postcssOptions: {
+								plugins: [
+									require('tailwindcss')(),
+									require('autoprefixer')(),
+									env != 'development' ? require('@fullhuman/postcss-purgecss')({
+										content: glob.sync(`${path.join(__dirname, 'src')}/**/*.{js,jsx,ts,tsx,html}`, { nodir: true, ignore: [`${path.join(__dirname, 'src')}/**/*.d.ts`] }),
+									}) : false,
+								]
+							}
+						}
+					},
 				],
 			},
 			{
@@ -69,7 +85,20 @@ module.exports = {
 							},
 						}
 					},
-					'postcss-loader',
+					{
+						loader: 'postcss-loader',
+						options: {
+							postcssOptions: {
+								plugins: [
+									require('tailwindcss')(),
+									require('autoprefixer')(),
+									env != 'development' ? require('@fullhuman/postcss-purgecss')({
+										content: glob.sync(`${path.join(__dirname, 'src')}/**/*.{js,jsx,ts,tsx,html}`, { nodir: true, ignore: [`${path.join(__dirname, 'src')}/**/*.d.ts`] }),
+									}) : false,
+								]
+							}
+						}
+					},
 					{
 						loader: 'sass-loader',
 						options: {
@@ -97,14 +126,17 @@ module.exports = {
 		  chunkFilename: '[id].css',
 		  ignoreOrder: false,
 		}),
-		new purgecssWebpackPlugin({
-		  paths: glob.sync(`${path.join(__dirname, 'src')}/**/*.{js,jsx,ts,tsx,html}`, { nodir: true, ignore: [`${path.join(__dirname, 'src')}/**/*.d.ts`] }),
-		}),
+		// new purgecssWebpackPlugin({
+		// 	paths: glob.sync(`${path.join(__dirname, 'src')}/**/*.{js,jsx,ts,tsx,html}`, { nodir: true, ignore: [`${path.join(__dirname, 'src')}/**/*.css.d.ts`] }),
+		// }),
 	],
 	devServer: {
 		contentBase: path.join(__dirname, 'public'),
 		compress: true,
 		port: 3000,
 		historyApiFallback: true
-	}
+	},
+	watchOptions: {
+	  poll: 1000, // Check for changes every second
+	},
 };
